@@ -3,6 +3,8 @@
 
 use core::panic::PanicInfo;
 
+mod vga_buffer;
+
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     loop {}
@@ -10,5 +12,8 @@ fn panic(_info: &PanicInfo) -> ! {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
+    vga_buffer::print_something();
     loop {}
 }
+
+// VGA Buffer Address = 0xb8000
