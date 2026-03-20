@@ -1,19 +1,46 @@
 #![no_std]
 #![no_main]
+// Testing Features
+#![feature(custom_test_frameworks)]
+#![test_runner(mini_os::test_runner)]
+#![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
+use mini_os::println;
 
-mod vga_buffer;
-
+#[cfg(not(test))]
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
+    println!("{}", info);
     loop {}
+}
+
+#[cfg(test)]
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+    mini_os::test_panic_handler(info)
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
-    vga_buffer::print_something();
+    use core::fmt::Write;
+
+    println!("Hello WOrld {}", "!");
+
+    #[cfg(test)]
+    test_main();
+
     loop {}
 }
 
-// VGA Buffer Address = 0xb8000
+#[test_case]
+fn test_println_simple() {
+    println!("test_println_simple output");
+}
+
+#[test_case]
+fn test_println_many() {
+    for _ in 0..200 {
+        println!("test_println_many output");
+    }
+}
