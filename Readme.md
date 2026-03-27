@@ -11,7 +11,7 @@
 - [x] Learn about Qemu or other emulators
 - [x] Interrupt Handlers
 - [x] GDT and TSS
-- [ ] Interrupt Stack Tables
+- [x] Interrupt Stack Tables
+- [x] Keyboard and peripheral support
 - [ ] Memory Allocators
 - [ ] Async Runtimes
-- [ ] Keyboard and peripheral support

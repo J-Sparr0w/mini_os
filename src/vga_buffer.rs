@@ -1,7 +1,8 @@
-use core::fmt;
+use core::fmt::{self, Write};
 use lazy_static::lazy_static;
 use spin::Mutex;
 use volatile::Volatile;
+use x86_64::instructions::interrupts;
 
 lazy_static! {
     pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
@@ -25,7 +26,10 @@ macro_rules! println {
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
     use core::fmt::Write;
-    WRITER.lock().write_fmt(args).unwrap();
+
+    interrupts::without_interrupts(|| {
+        WRITER.lock().write_fmt(args).unwrap();
+    })
 }
 
 #[allow(dead_code)]
@@ -153,10 +157,13 @@ pub fn print_something() {
 #[test_case]
 fn test_println_output() {
     let s = "Some test string that fits on a single line";
-    println!("{}", s);
 
-    for (i, ch) in s.char_indices() {
-        let screen_char = WRITER.lock().vga_buffer.chars[BUFFER_HEIGHT - 2][i].read();
-        assert_eq!(char::from(screen_char.ascii_char), ch);
-    }
+    interrupts::without_interrupts(|| {
+        let mut writer = WRITER.lock();
+        writeln!(writer, "\n{}", s).expect("writeln failed");
+        for (i, ch) in s.char_indices() {
+            let screen_char = writer.vga_buffer.chars[BUFFER_HEIGHT - 2][i].read();
+            assert_eq!(char::from(screen_char.ascii_char), ch);
+        }
+    });
 }
