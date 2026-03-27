@@ -4,6 +4,8 @@
 
 ## Output:
 ![Qemu screen with breakpoint interrupt printed on screen](notes/x86_print_interrupt.png)
+### Keyboard Input
+![Qemu screen with Hello World printed on screen using keyboard input](notes/WithKeyboard.png)
 
 ## Progress
 - [x] Free Standing Binary
