@@ -2,7 +2,7 @@
 - A minimal OS implementation based on [os.phil-opp.com](https://os.phil-opp.com/minimal-rust-kernel/)
 - Goal: Learn how OS-internals work by building one
 
-## Images:
+## Output:
 ![Qemu screen with breakpoint interrupt printed on screen](notes/x86_print_interrupt.png)
 
 
