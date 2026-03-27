@@ -5,12 +5,12 @@
 ## Output:
 ![Qemu screen with breakpoint interrupt printed on screen](notes/x86_print_interrupt.png)
 
-
-
 ## Progress
 - [x] Free Standing Binary
 - [x] Custom Target Triple for compilation
-- [ ] Learn about Qemu or other emulators
+- [x] Learn about Qemu or other emulators
+- [x] Interrupt Handlers
+- [x] GDT and TSS
 - [ ] Interrupt Stack Tables
 - [ ] Memory Allocators
 - [ ] Async Runtimes

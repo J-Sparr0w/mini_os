@@ -154,6 +154,7 @@ pub fn print_something() {
 fn test_println_output() {
     let s = "Some test string that fits on a single line";
     println!("{}", s);
+
     for (i, ch) in s.char_indices() {
         let screen_char = WRITER.lock().vga_buffer.chars[BUFFER_HEIGHT - 2][i].read();
         assert_eq!(char::from(screen_char.ascii_char), ch);
